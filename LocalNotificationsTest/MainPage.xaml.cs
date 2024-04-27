@@ -22,7 +22,7 @@ namespace LocalNotificationsTest
             //   InitLocalNotification();
         }
 
-        private void InitLocalNotification()
+        private async void InitLocalNotification()
         {
             /*
              * For Android 13 and above.. This plugin doesnt schedule
@@ -33,6 +33,11 @@ namespace LocalNotificationsTest
                  LocalNotificationCenter.RequestNotificationPermissionAsync()  - NOT Avaialble
 
             */
+
+            if (await LocalNotificationCenter.Current.AreNotificationsEnabled() == false)
+            {
+                await LocalNotificationCenter.Current.RequestNotificationPermission();
+            }
 
             // Cancel and clear any Local notifications that exisits, and schedule a new notification
             LocalNotificationCenter.Current.ClearAll();
